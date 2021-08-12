@@ -1,19 +1,33 @@
 import React, { Component } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 class AddContact extends Component {
 
     state = {
-        name: "sadd",
-        email: "sajedul@gmail.com ",
-        phone: "01765 "
+        name: "",
+        email: "",
+        phone: ""
     }
     handleChange = (e) => {
         this.setState({ [e.target.name]: e.target.value });
     }
     saveContact = async (e) => {
         e.preventDefault();
-        // const res = await axios.post("/contact", this.state);
+        const res = await axios.post("/contact", this.state)
+            .then((result) => {
+                this.setState({ name: "", email: "", phone: "" })
+                this.props.navigate("/Contact");
+
+            }).catch((err) => {
+
+            });
         // console.log(res);
+        // if (res.data.status === 200) {
+
+        //     this.setState({ name: "", email: "", phone: "" })
+        //     this.props.navigate("/Contact");
+        // }
 
     }
     render() {
@@ -30,15 +44,20 @@ class AddContact extends Component {
 
                         </div>
                         <div className="form-group ">
-                            <label htmlFor="email">Email</label>
-                            <input type="email" name="email " className="form-control"
-                                value={this.state.email} onChange={(event) => this.handleChange(event)} placeholder="Enter your Email  " required />
+                            <label htmlFor="email">email</label>
+                            <input type="email" name="email" className="form-control" value={this.state.email} onChange={(event) => this.handleChange(event)}
+                                placeholder="Enter your email  " required />
 
                         </div>
                         <div className="form-group ">
                             <label htmlFor="phone">Phone</label>
-                            <input type="number" name="phone " className="form-control"
-                                value={this.state.phone} onChange={(event) => this.handleChange(event)} placeholder="Enter Your Phone " required />
+                            <input type="number" name="phone" className="form-control" value={this.state.phone} onChange={(event) => this.handleChange(event)}
+                                placeholder="Enter your phone " required />
+
+                        </div>
+
+                        <div className="form-group ml-1">
+                            <input type="submit" className="btn btn-primary" value="AddContacts" />
 
                         </div>
 
@@ -51,4 +70,16 @@ class AddContact extends Component {
     }
 }
 
-export default AddContact;
+
+
+
+const withNavigate = props => {
+    let navigate = useNavigate();
+    return (
+
+
+        <AddContact {...props} navigate={navigate} />
+    );
+};
+
+export default withNavigate;

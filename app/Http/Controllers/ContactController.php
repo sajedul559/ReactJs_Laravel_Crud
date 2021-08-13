@@ -14,7 +14,8 @@ class ContactController extends Controller
      */
     public function index()
     {
-        //
+        $contact = Contact::all();
+        return response()->json(['status' => 200, 'contacts' => $contact]);
     }
 
     /**

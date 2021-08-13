@@ -19,15 +19,7 @@ class AddContact extends Component {
                 this.setState({ name: "", email: "", phone: "" })
                 this.props.navigate("/Contact");
 
-            }).catch((err) => {
-
-            });
-        // console.log(res);
-        // if (res.data.status === 200) {
-
-        //     this.setState({ name: "", email: "", phone: "" })
-        //     this.props.navigate("/Contact");
-        // }
+            })
 
     }
     render() {

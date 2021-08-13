@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
+
 
 
 class Contacts extends Component {
@@ -15,6 +17,16 @@ class Contacts extends Component {
 
 
         });
+    }
+    deleteContact = async (id) => {
+        const res = await axios.delete(`/contact/${id}`).then((result) => {
+
+            this.getAllContacts();
+
+
+        });
+
+
     }
 
     componentDidMount = () => {
@@ -45,8 +57,8 @@ class Contacts extends Component {
                                     <td>{contact.email}</td>
                                     <td>{contact.phone}</td>
                                     <td>
-                                        <a className="btn btn-primary">Edit</a>
-                                        <a className="btn btn-danger">Delete</a>
+                                        <a onClick={() => this.deleteContact(contact.id)} className="btn btn-danger">Delete</a>
+                                        <Link to={`/edit.contact/${contact.id}`} className="btn btn-primary">Edit</Link>
                                     </td>
 
 
